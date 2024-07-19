@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>pLM4CPPs - Protein Language Model-Based Predictor for Cell Penetrating Peptides</title>
+    <meta name="description" content="pLM4CPPs - A web server for predicting Cell Penetrating Peptides using Protein Language Models.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            padding: 10px 0;
+            background-color: #333;
+            text-align: center;
+            margin-bottom: 0px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            color: #fff;
+            font-weight: normal;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
+        header span {
+            font-size: 8.0em;
+            font-weight: bold;
+            color: #007bff;
+            display: block;
+            margin-top: 0em;
+        }
+
+        .content {
+            max-width: 1500px;
+            width: 90%;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            text-align: justify;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-family: 'Tangerine', serif;
+            font-size: 3em;
+            margin-bottom: 0.5em;
+            text-align: center;
+            color: #333;
+        }
+
+        p {
+            font-size: 1em;
+            line-height: 1.6;
+            margin-bottom: 1em;
+            color: #555;
+        }
+
+        form {
+            margin-bottom: 1.5em;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 0.5em;
+            color: #333;
+        }
+
+        select,
+        input[type="text"],
+        input[type="file"] {
+            width: calc(100% - 10px);
+            padding: 10px;
+            font-size: 1em;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1em;
+            margin-top: 0.5em;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        img {
+            width: 90%;
+            height: auto;
+            margin-top: 1em;
+            margin-bottom: 2em;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        section > div {
+            width: 60%;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: #333;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        /* Responsive adjustments for small screens */
+        @media (max-width: 768px) {
+            section {
+                flex-direction: column;
+            }
+
+            section > div {
+                width: 100%;
+            }
+        }
+
+        .important-text {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 5px 0;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            left: 0;
+            bottom: 0;
+            
+        }
+
+        .dataset-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .dataset-section > div {
+            width: 48%;
+        }
+
+        .dataset-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .dataset-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .dataset-section ul li {
+            margin-bottom: 25px;
+        }
+
+        .dataset-section ul li a {
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <span>pLM4CPPs</span>
+        <h1>Protein Language Model-Based Predictor for Cell Penetrating Peptides</h1>
+    </header>
+
+    <div class="content">
+        <p>pLM4CPPs is a deep learning architecture designed for predicting cell-penetrating peptides (CPPs). At its core, pLM4CPPs utilizes advanced pretrained protein language models (pLMs) trained on extensive protein sequence data. These models capture intricate sequence relationships and functional motifs critical for CPP activity, enhancing accuracy and reliability in classification. Key to pLM4CPPs is its integration of Convolutional Neural Networks (CNNs) for hierarchical feature extraction from peptide sequences, achieving superior performance metrics such as accuracy, Matthews Correlation Coefficient (MCC), and sensitivity. Multiple peptide embeddings from sources like BEPLER, CPCProt, SeqVec, ESM variants (ESM, ESM-2, ESM-1b, ESM-1v), ProtT5-XL UniRef50, and ProtT5-XL BFD are evaluated to optimize performance across diverse datasets. pLM4CPPs integrates predictions from multiple models to provide a consensus decision on CPP classification, ensuring robust results and reliability. This platform is the implementation of the paper: <strong>Kumar, N.; Du, Z.; Li, Y. pLM4CPPs: Protein Language Model-Based Predictor for Cell Penetrating Peptides, J. Chem. Inf. Model. 2024 (Submitted).</strong></p>
+
+        <section>
+            <div>
+                <h2 style="color: #007bff;">Quick Output Version:</h2>
+                <form action="{{url_for('predict')}}" method="post">
+                    <label for="model1">Choose a model:</label>
+                    <select id="model1" name="Model_selection" required>
+                        <option value="1">pLM4CPPs (ESM-1280)</option>
+                        <option value="2">pLM4CPPs (ESM-640)</option>
+                        <option value="3">pLM4CPPs (ESM-480)</option>
+                        <option value="4">pLM4CPPs (ESM-320)</option>
+						<option value="5">pLM4CPPs (ProtT5-XL BFD)</option>
+						<option value="6">pLM4CPPs (SeqVec)</option>
+                    </select>
+                    <label for="model1">Enter peptide sequences:</label>
+                    <input type="text" id="peptideInput" name="Peptide_sequences" placeholder="Enter peptide sequences (e.g., ASD,QWE,APE)" required>
+                    <button type="submit" class="btn">Predict</button>
+                </form>
+            </div>
+
+            <div>
+                <h2 style="color: #007bff;">Large-scale Output Version:</h2>
+                <form action="{{url_for('pred_with_file')}}" method="post" enctype="multipart/form-data">
+                    <label for="model2">Choose a model:</label>
+                    <select id="model2" name="Model_selection" required>
+                        <option value="1">pLM4CPPs (ESM-1280)</option>
+                        <option value="2">pLM4CPPs (ESM-1280)</option>
+                        <option value="3">pLM4CPPs (ESM-1280)</option>
+                        <option value="4">pLM4CPPs (ESM-1280)</option>
+						<option value="5">pLM4CPPs (ProtT5-XL BFD)</option>
+						<option value="6">pLM4CPPs (SeqVec)</option>
+                    </select>
+                    <br>
+                    <label for="fileUpload">Choose a file to upload:</label>
+                    <input type="file" id="fileUpload" name="Peptide_sequences" accept=".xls,.xlsx,.txt,.fasta" required>
+                    <button type="submit" class="btn">Predict</button>
+                </form>
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <h2 style="color: #007bff;">Usage of the Web Server:</h2>
+                <hr>
+                <p class="important-text">Quick Output Version: </p><strong> Select a model, input peptide sequences, and click "Run" for quick predictions.</p>
+                <p><strong>Notice:</strong> Support multiple sequences input (e.g., "VPP,IPP,CCL,AGR").</p>
+                <p class="important-text">Large-scale Output Version: </p><strong>Upload files (xls, xlsx, txt, fasta) and click "Run" for batch predictions.</p>
+                <p><strong>Notice:</strong> File preparation guidelines available at the <a href="https://github.com/drkumarnandan/pLM4CPPs_webserver/tree/main/Example%20uploading%20files" target="_blank">repository</a>.</p>
+            </div>
+
+            <div>
+                <h2 style="color: #007bff;">Model Performance on Test Dataset:</h2>
+                <hr>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>ACC</th>
+							<th>BACC</th>
+                            <th>Sn</th>
+                            <th>Sp</th>
+                            <th>MCC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>pLM4CPPs (ESM-1280)</td>
+                            <td>0.929</td>
+							<td>0.893</td>
+                            <td>0.820</td>
+                            <td>0.966</td>
+                            <td>0.808</td>
+                        </tr>
+                        <tr>
+                            <td>pLM4CPPs (ESM-640)</td>
+                            <td>0.923</td>
+							<td>0.880</td>
+                            <td>0.791</td>
+                            <td>0.968</td>
+                            <td>0.792</td>
+                        </tr>
+                        <tr>
+                            <td>pLM4CPPs (ESM-480)</td>
+                            <td>0.931</td>
+							<td>0.907</td>
+                            <td>0.860</td>
+                            <td>0.955</td>
+                            <td>0.816</td>
+                        </tr>
+                        <tr>
+                            <td>pLM4CPPs (ESM-320)</td>
+                            <td>0.923</td>
+							<td>0.892</td>
+                            <td>0.831</td>
+                            <td>0.955</td>
+                            <td>0.795</td>
+                        </tr>
+						<tr>
+                            <td>pLM4CPPs (ProtT5-XL BFD)</td>
+                            <td>0.921</td>
+							<td>0.891</td>
+                            <td>0.831</td>
+                            <td>0.951</td>
+                            <td>0.789</td>
+                        </tr>
+						<tr>
+                            <td>pLM4CPPs (SeqVec)</td>
+                            <td>0.932</td>
+							<td>0.901</td>
+                            <td>0.838</td>
+                            <td>0.965</td>
+                            <td>0.819</td>
+                        </tr>
+                    </tbody>
+                </table>
+            <strong>Note:</strong> Accuracy (ACC), balanced accuracy (BACC), sensitivity (Sn), specificity (Sp), and matthews correlation coefficient (MCC).</p>
+			</div>
+        </section>
+		
+        <h2 style="color: #007bff;">Schematic framework of pLM4CPPs:</h2>
+        <hr>
+        <img src="pLM4CPPs.png" alt="Whole architecture">
+        
+		
+        <section class="dataset-section">
+		
+            <div>
+                <h2 style="color: #007bff;">pLM4CPPs Dataset</h2>
+				<hr>
+                <ul>
+                    <li><a href="pLM4CPPs_dataset_CPP.xlsx" download>Download CPP Dataset</a></li>
+                    <li><a href="pLM4CPPs_dataset_Non-CPP.xlsx" download>Download Non-CPP Dataset</a></li>
+                </ul>
+            </div>
+            <div>
+                <h2 style="color: #007bff;">Independent Dataset</h2>
+				<hr>
+                <ul>
+                    <li><a href="kelm_dataset_CPP.csv" download>Download CPP Dataset</a></li>
+                    <li><a href="kelm_dataset_Non-CPP.csv" download>Download Non-CPP Dataset</a></li>
+                </ul>
+            </div>
+			<div>
+					<h2 style="color: #007bff;">Contact and Support</h2>
+					<hr>
+					<a href="mailto:nandan@ksu.edu">Nandan Kumar (nandan@ksu.edu)</a></p>
+                    <a href="mailto:zhenjiao@ksu.edu">Zhenjiao Du (zhenjiao@ksu.edu)</a></p>
+                    <a href="mailto:yonghui@ksu.edu">Yonghui Li (yonghui@ksu.edu)</a></p>
+			</div>
+		</section>
+
+    <footer>
+        <p>&copy; 2024 pLM4CPPs. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
