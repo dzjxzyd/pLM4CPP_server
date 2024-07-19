@@ -22,8 +22,8 @@ def esm_embeddings_320(peptide_sequence_list: list):
     import collections
     # load the model
     # NOTICE: if the model was not downloaded in your local environment, it will automatically download it.
-    model, esm2_alphabet = esm.pretrained.esm2_t6_8M_UR50D()
-    batch_converter = esm2_alphabet.get_batch_converter()
+    model, alphabet = esm.pretrained.esm2_t6_8M_UR50D()
+    batch_converter = alphabet.get_batch_converter()
     model.eval()  # disables dropout for deterministic results
 
     # load the peptide sequence list into the bach_converter
@@ -70,9 +70,9 @@ def esm_embeddings_480(peptide_sequence_list):
     device = torch.device("cpu")
     
   
-  esm2, esm2_alphabet = esm.pretrained.esm2_t12_35M_UR50D()
+  esm2, alphabet = esm.pretrained.esm2_t12_35M_UR50D()
   esm2 = esm2.eval().to(device)
-  batch_converter = esm2_alphabet.get_batch_converter()
+  batch_converter = alphabet.get_batch_converter()
 
   # load the peptide sequence list into the bach_converter
   batch_labels, batch_strs, batch_tokens = batch_converter(peptide_sequence_list)
@@ -119,10 +119,10 @@ def esm_embeddings_640(peptide_sequence_list):
     device = torch.device("cuda")
   else:
     device = torch.device("cpu")
-  esm2, esm2_alphabet = esm.pretrained.esm2_t30_150M_UR50D()
+  esm2, alphabet = esm.pretrained.esm2_t30_150M_UR50D()
   esm2 = esm2.eval().to(device)
 
-  batch_converter = esm2_alphabet.get_batch_converter()
+  batch_converter = alphabet.get_batch_converter()
 
   # load the peptide sequence list into the bach_converter
   batch_labels, batch_strs, batch_tokens = batch_converter(peptide_sequence_list)
@@ -169,10 +169,10 @@ def esm_embeddings_1280( peptide_sequence_list):
     device = torch.device("cuda")
   else:
     device = torch.device("cpu")
-  esm2, esm2_alphabet = esm.pretrained.esm2_t33_650M_UR50D()
+  esm2, alphabet = esm.pretrained.esm2_t33_650M_UR50D()
   esm2 = esm2.eval().to(device)
 
-  batch_converter = esm2_alphabet.get_batch_converter()
+  batch_converter = alphabet.get_batch_converter()
 
   # load the peptide sequence list into the bach_converter
   batch_labels, batch_strs, batch_tokens = batch_converter(peptide_sequence_list)
