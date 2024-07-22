@@ -13,3 +13,5 @@ werkzeug==2.2.2
 focal-loss
 openpyxl==3.0.9
 urllib3==1.26.6
+bio-embeddings
+bio-embeddings[seqvec]
