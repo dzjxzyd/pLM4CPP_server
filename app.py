@@ -339,7 +339,7 @@ def predict():
     elif int_features[0] == '6':
         embeddings_results = SeqVec_embedding(peptide_sequence_list)  # conduct the embedding
         
-    scaler_name = model_name + '.joblib'
+    scaler_name = model_name[:-3] + '.joblib'
     scaler = joblib.load(os.path.join(os.getcwd(),scaler_name))
     normalized_embeddings_results = scaler.transform(embeddings_results)  # normalized the embeddings
     # prediction
@@ -433,7 +433,7 @@ def pred_with_file():
     elif int_features[0] == '6':
         embeddings_results = SeqVec_embedding(peptide_sequence_list)  # conduct the embedding
     
-    scaler_name = model_name + '.joblib'
+    scaler_name = model_name[:-3] + '.joblib'
     scaler = joblib.load(os.path.join(os.getcwd(),scaler_name))
     normalized_embeddings_results = scaler.transform(embeddings_results)  # normalized the embeddings
     # prediction
