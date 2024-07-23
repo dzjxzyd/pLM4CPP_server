@@ -1,6 +1,1 @@
-# LM4ACE_webserver: 
-Updates on 19 Aug: the fasta and txt format reading function was revised 
-
-https://sqzujiduce.us-east-1.awsapprunner.com 
-
-Original code repository: https://github.com/dzjxzyd/pLM4ACE
+pLM4CPPs is a deep learning architecture designed for predicting cell-penetrating peptides (CPPs). At its core, pLM4CPPs utilizes advanced pretrained protein language models (pLMs) trained on extensive protein sequence data. These models capture intricate sequence relationships and functional motifs critical for CPP activity, enhancing accuracy and reliability in classification. Key to pLM4CPPs is its integration of Convolutional Neural Networks (CNNs) for hierarchical feature extraction from peptide sequences, achieving superior performance metrics such as accuracy, Matthews Correlation Coefficient (MCC), and sensitivity. Multiple peptide embeddings from sources like BEPLER, CPCProt, SeqVec, ESM variants (ESM, ESM-2, ESM-1b, ESM-1v), ProtT5-XL UniRef50, and ProtT5-XL BFD are evaluated to optimize performance across diverse datasets. pLM4CPPs integrates predictions from multiple models to provide a consensus decision on CPP classification, ensuring robust results and reliability. This platform is the implementation of the paper: Kumar, N.; Du, Z.; Li, Y. pLM4CPPs: Protein Language Model-Based Predictor for Cell Penetrating Peptides, J. Chem. Inf. Model. 2024 (Submitted).
