@@ -327,20 +327,6 @@ def predict():
             one_seq_embeddings = esm_embeddings_320(peptide_sequence_list)  # conduct the embedding
             embeddings_results = pd.concat([embeddings_results,one_seq_embeddings])
             
-    elif int_features[0] == '5':
-        embeddings_results = pd.DataFrame()
-        tokenizer = T5Tokenizer.from_pretrained('Rostlab/prot_t5_xl_bfd', do_lower_case=False)
-        model = T5EncoderModel.from_pretrained("Rostlab/prot_t5_xl_bfd")
-        for seq in sequence_list:
-            truncated_seq = seq[:512]
-            
-            inputs = tokenizer(truncated_seq, return_tensors='pt', padding=True, truncation=True, max_length=512)
-            output = model(**inputs)
-            one_seq_embeddings = output.last_hidden_state.mean(dim=1).detach().numpy() 
-            embeddings_results = pd.concat([embeddings_results,pd.DataFrame(one_seq_embeddings)])
-        
-    elif int_features[0] == '6':
-        embeddings_results = SeqVec_embedding(peptide_sequence_list)  # conduct the embedding
         
     if int(int_features[0]) < 1 or int(int_features[0]) > 12:
         return render_template('index.html')
@@ -439,12 +425,6 @@ def pred_with_file():
             peptide_sequence_list.append(tuple_sequence)  # build a summarize list variable including all the sequence information
             one_seq_embeddings = esm_embeddings_320(peptide_sequence_list)  # conduct the embedding
             embeddings_results = pd.concat([embeddings_results,one_seq_embeddings])
-            
-    elif int_features[0] == '5':
-        embeddings_results = ProtBFD_embedding(peptide_sequence_list)  # conduct the embedding
-        
-    elif int_features[0] == '6':
-        embeddings_results = SeqVec_embedding(peptide_sequence_list)  # conduct the embedding
         
     predicted_class = model.predict(normalized_embeddings_results)
     predicted_class = assign_activity(predicted_class)  # transform results (0 and 1) into 'active' and 'non-active'
