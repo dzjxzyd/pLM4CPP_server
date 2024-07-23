@@ -345,9 +345,9 @@ def predict():
     predicted_class_AA = []
     for i in range(predicted_protability.shape[0]):
         if predicted_protability[i]>=0.5:
-            predicted_class_AA.append(1)
-        else:
             predicted_class_AA.append(0)
+        else:
+            predicted_class_AA.append(1)
     predicted_class = assign_activity(predicted_class_AA)  # transform results (0 and 1) into 'active' and 'non-active'
     final_output = []
     for i in range(len(sequence_list)):
@@ -440,9 +440,9 @@ def pred_with_file():
     predicted_class_AA = []
     for i in range(predicted_protability.shape[0]):
         if predicted_protability[i]>=0.5:
-            predicted_class_AA.append(1)
-        else:
             predicted_class_AA.append(0)
+        else:
+            predicted_class_AA.append(1)
     predicted_class = assign_activity(predicted_class_AA)  # transform results (0 and 1) into 'active' and 'non-active'
 
     report = {"sequence": sequence_list, "activity": predicted_class}
