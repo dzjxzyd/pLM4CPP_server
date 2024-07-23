@@ -425,13 +425,13 @@ def pred_with_file():
             one_seq_embeddings = esm_embeddings_320(peptide_sequence_list)  # conduct the embedding
             embeddings_results = pd.concat([embeddings_results,one_seq_embeddings])
         
-    predicted_class = model.predict(normalized_embeddings_results)
-    predicted_class = assign_activity(predicted_class)  # transform results (0 and 1) into 'active' and 'non-active'
+
     scaler_name = model_name[:-3] + '.joblib'
     scaler = joblib.load(os.path.join(os.getcwd(),scaler_name))
     normalized_embeddings_results = scaler.transform(embeddings_results)  # normalized the embeddings
     # prediction
-
+    predicted_class = model.predict(normalized_embeddings_results)
+    predicted_class = assign_activity(predicted_class)  # transform results (0 and 1) into 'active' and 'non-active'
 
     report = {"sequence": sequence_list, "activity": predicted_class}
     report_df = pandas.DataFrame(report)
