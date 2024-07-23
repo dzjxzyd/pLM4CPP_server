@@ -12,5 +12,3 @@ gunicorn==20.1.0
 werkzeug==2.2.2
 openpyxl==3.0.9
 urllib3==1.26.6
-transformers
-sentencepiece
