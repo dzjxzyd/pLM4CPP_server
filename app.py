@@ -7,7 +7,7 @@ import pandas as pd
 from werkzeug.utils import secure_filename
 from tensorflow.keras.models import load_model
 import joblib
-import transformers
+from transformers import T5Tokenizer, T5EncoderModel
 app = Flask(__name__)
 
 
