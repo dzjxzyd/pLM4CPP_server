@@ -7,6 +7,7 @@ import pandas as pd
 from werkzeug.utils import secure_filename
 from tensorflow.keras.models import load_model
 import joblib
+import transformers
 app = Flask(__name__)
 
 
@@ -327,7 +328,16 @@ def predict():
             embeddings_results = pd.concat([embeddings_results,one_seq_embeddings])
             
     elif int_features[0] == '5':
-        embeddings_results = ProtBFD_embedding(peptide_sequence_list)  # conduct the embedding
+        embeddings_results = pd.DataFrame()
+        tokenizer = T5Tokenizer.from_pretrained('Rostlab/prot_t5_xl_bfd', do_lower_case=False)
+        model = T5EncoderModel.from_pretrained("Rostlab/prot_t5_xl_bfd")
+        for seq in sequence_list:
+            truncated_seq = seq[:512]
+            
+            inputs = tokenizer(truncated_seq, return_tensors='pt', padding=True, truncation=True, max_length=512)
+            output = model(**inputs)
+            one_seq_embeddings = output.last_hidden_state.mean(dim=1).detach().numpy() 
+            embeddings_results = pd.concat([embeddings_results,pd.DataFrame(one_seq_embeddings)])
         
     elif int_features[0] == '6':
         embeddings_results = SeqVec_embedding(peptide_sequence_list)  # conduct the embedding
