@@ -342,14 +342,16 @@ def predict():
     elif int_features[0] == '6':
         embeddings_results = SeqVec_embedding(peptide_sequence_list)  # conduct the embedding
         
+    if int(int_features[0]) < 1 or int(int_features[0]) > 12:
+        return render_template('index.html')
+    model_name = model_selection(int_features[0])
+    
     scaler_name = model_name[:-3] + '.joblib'
     scaler = joblib.load(os.path.join(os.getcwd(),scaler_name))
     normalized_embeddings_results = scaler.transform(embeddings_results)  # normalized the embeddings
 
     #    name = int_features[0]
-    if int(int_features[0]) < 1 or int(int_features[0]) > 12:
-        return render_template('index.html')
-    model_name = model_selection(int_features[0])
+
     
     model = load_model(model_name)
 
@@ -443,13 +445,14 @@ def pred_with_file():
         
     elif int_features[0] == '6':
         embeddings_results = SeqVec_embedding(peptide_sequence_list)  # conduct the embedding
-    
+        
+    predicted_class = model.predict(normalized_embeddings_results)
+    predicted_class = assign_activity(predicted_class)  # transform results (0 and 1) into 'active' and 'non-active'
     scaler_name = model_name[:-3] + '.joblib'
     scaler = joblib.load(os.path.join(os.getcwd(),scaler_name))
     normalized_embeddings_results = scaler.transform(embeddings_results)  # normalized the embeddings
     # prediction
-    predicted_class = model.predict(normalized_embeddings_results)
-    predicted_class = assign_activity(predicted_class)  # transform results (0 and 1) into 'active' and 'non-active'
+
 
     report = {"sequence": sequence_list, "activity": predicted_class}
     report_df = pandas.DataFrame(report)
