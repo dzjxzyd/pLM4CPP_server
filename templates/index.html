@@ -234,12 +234,11 @@
                 <form action="{{url_for('predict')}}" method="post">
                     <label for="model1">Choose a model:</label>
                     <select id="model1" name="Model_selection" required>
-                        <option value="1">pLM4CPPs (ESM-1280)</option>
+
                         <option value="2">pLM4CPPs (ESM-640)</option>
                         <option value="3">pLM4CPPs (ESM-480)</option>
                         <option value="4">pLM4CPPs (ESM-320)</option>
-			<option value="5">pLM4CPPs (ProtT5-XL BFD)</option>
-			<option value="6">pLM4CPPs (SeqVec)</option>
+
                     </select>
                     <label for="model1">Enter peptide sequences:</label>
                     <input type="text" id="peptideInput" name="Peptide_sequences" placeholder="Enter peptide sequences (e.g., ASD,QWE,APE)" required>
@@ -253,12 +252,11 @@
                 <form action="{{url_for('pred_with_file')}}" method="post" enctype="multipart/form-data">
                     <label for="model2">Choose a model:</label>
                     <select id="model2" name="Model_selection" required>
-                        <option value="1">pLM4CPPs (ESM-1280)</option>
+
                         <option value="2">pLM4CPPs (ESM-640)</option>
                         <option value="3">pLM4CPPs (ESM-480)</option>
                         <option value="4">pLM4CPPs (ESM-320)</option>
-			<option value="5">pLM4CPPs (ProtT5-XL BFD)</option>
-			<option value="6">pLM4CPPs (SeqVec)</option>
+
                     </select>
                     <br>
                     <label for="fileUpload">Choose a file to upload:</label>
